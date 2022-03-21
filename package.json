@@ -1,0 +1,29 @@
+{
+  "name": "spp",
+  "version": "1.0.0",
+  "description": "A Front end project using Gulp js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VuTran992/spp.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VuTran992/spp/issues"
+  },
+  "homepage": "https://github.com/VuTran992/spp#readme",
+  "devDependencies": {
+    "@babel/core": "^7.17.8",
+    "@babel/preset-env": "^7.16.11",
+    "gulp": "^4.0.2",
+    "gulp-babel": "^8.0.0",
+    "gulp-connect": "^5.7.0",
+    "gulp-ejs": "^5.1.0",
+    "gulp-sourcemaps": "^3.0.0"
+  },
+  "dependencies": {}
+}
