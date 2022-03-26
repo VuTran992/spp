@@ -10,6 +10,4 @@ $(document).ready(function () {
     letters.add("c");
     letters.add("d");
     console.log(letters.size);
-
-    bootstrap.Tooltip.VERSION;
 });

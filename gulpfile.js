@@ -4,7 +4,7 @@ const concat = require('gulp-concat');
 const rename = require('gulp-rename');
 const uglify = require('gulp-uglify');
 
-//
+// browser sync
 const browserSync = require('browser-sync');
 
 //scripts
@@ -17,6 +17,9 @@ const postcss = require('gulp-postcss');
 const cssnano = require('cssnano');
 const autoprefixer = require('autoprefixer');
 
+// html, partials, template
+
+const hb = require('gulp-hb');
 
 var settings = {
     reload: true,
@@ -36,17 +39,23 @@ var paths = {
     scripts: {
         vendor: [
             "src/vendors/jquery/jquery-3.6.0.min.js",
-            "src/vendors/popper/popper.min.js",
-            "src/vendors/bootstrap/bootstrap.min.js"
+            "src/vendors/bootstrap/js/bootstrap.min.js"
         ],
         input: "src/js/**/*.js",
         polyfills: ".polyfill.js",
         output: "dist/scripts/"
     },
+    fonts: {
+        input: "src/fonts/**/*.{ttf,woff,woff2,eof,svg}",
+        output: "dist/fonts"
+    }
+    ,
     html: {
-        input: "src/*.html",
+        input: "src/pages/*.html",
+        partials: "src/pages/partials/**/*.hbs",
         output: "dist/"
     },
+    watch: "src/",
     reload: "./dist/"
 };
 
@@ -90,10 +99,19 @@ function styles() {
         .pipe(dest(paths.styles.output));
 }
 
+// copy fonts
+
+function fonts() {
+    return src(paths.fonts.input)
+        .pipe(dest(paths.fonts.output));
+}
+
 // Html
 
 function html() {
     return src(paths.html.input)
+        .pipe(hb()
+            .partials(paths.html.partials))
         .pipe(dest(paths.output));
 }
 
@@ -119,7 +137,8 @@ function reloadBrowser(done) {
 }
 
 function watchSource(done) {
-    watch(paths.input, series(exports.build, reloadBrowser));
+    watch(paths.watch,
+        series(exports.build, reloadBrowser));
     done();
 }
 
@@ -132,7 +151,7 @@ function watchSource(done) {
 
 exports.build = series(
     cleanDist,
-    parallel(scripts, styles, html)
+    parallel(scripts, styles, fonts, html)
 );
 exports.watch = series(
     exports.build,
